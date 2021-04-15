@@ -21,6 +21,7 @@ import AppSettings from '../graphql/appSettings.graphql'
 import ReviewsByProductId from '../graphql/reviewsByProductId.graphql'
 import AverageRatingByProductId from '../graphql/averageRatingByProductId.graphql'
 import ReviewsGraph from './ReviewsGraph'
+import push from './modules/push'
 
 interface Review {
   id: number
@@ -441,6 +442,13 @@ function Reviews() {
       })
       .then((response: ApolloQueryResult<AverageData>) => {
         const average = response.data.averageRatingByProductId
+
+        const data = {
+          event: "reviewsAndRatings",
+          avgRating: average
+        }
+        push(data)
+
         dispatch({
           type: 'SET_AVERAGE',
           args: { average },

@@ -7,6 +7,7 @@ import { useProduct } from 'vtex.product-context'
 import Stars from './components/Stars'
 import TotalReviewsByProductId from '../graphql/totalReviewsByProductId.graphql'
 import AverageRatingByProductId from '../graphql/averageRatingByProductId.graphql'
+import push from './modules/push'
 
 interface TotalData {
   totalReviewsByProductId: number
@@ -96,6 +97,12 @@ function RatingInline() {
           type: 'SET_AVERAGE',
           args: { average },
         })
+
+        const data = {
+          event: "reviewsAndRatings",
+          avgRating: average
+        }
+        push(data)
       })
   }, [client, productId])
 

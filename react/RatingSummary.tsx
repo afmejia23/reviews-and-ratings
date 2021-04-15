@@ -12,6 +12,7 @@ import AppSettings from '../graphql/appSettings.graphql'
 import Stars from './components/Stars'
 import TotalReviewsByProductId from '../graphql/totalReviewsByProductId.graphql'
 import AverageRatingByProductId from '../graphql/averageRatingByProductId.graphql'
+import push from './modules/push'
 
 interface TotalData {
   totalReviewsByProductId: number
@@ -158,6 +159,13 @@ function RatingSummary() {
       })
       .then((response: ApolloQueryResult<AverageData>) => {
         const average = response.data.averageRatingByProductId
+
+        const data = {
+          event: "reviewsAndRatings",
+          avgRating: average
+        }
+        push(data)
+
         dispatch({
           type: 'SET_AVERAGE',
           args: { average },

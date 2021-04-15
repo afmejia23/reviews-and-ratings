@@ -2,7 +2,8 @@ import { FunctionComponent } from 'react'
 
 declare global {
   interface Window extends Window {
-    __RENDER_8_SESSION__: RenderSession
+    __RENDER_8_SESSION__: RenderSession,
+    dataLayer: any[]
   }
 
   interface RenderSession {
